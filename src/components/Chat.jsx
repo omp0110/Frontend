@@ -102,9 +102,9 @@ export default function Chat({ setPreviewUrl }) {
 
   return (
     <div className="flex flex-col h-full p-4 bg-gradient-to-br from-purple-600 via-pink-500 to-red-400">
-      <h2 className="text-3xl font-bold mb-4 text-white drop-shadow-lg">🧠 Website Maker Bot</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-white drop-shadow-lg text-center sm:text-left">🧠 Website Maker Bot</h2>
 
-      <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+      <div className="flex-1 overflow-y-auto space-y-4 pr-1 sm:pr-2">
         {messages.map((msg, index) => (
           <motion.div
             key={index}
@@ -139,10 +139,10 @@ export default function Chat({ setPreviewUrl }) {
         <div ref={chatEndRef} />
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-4 flex gap-2 items-center">
+      <form onSubmit={handleSubmit} className="mt-4 flex flex-col sm:flex-row gap-2 items-center">
         <input
           type="text"
-          className="flex-1 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
+          className="w-full px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Describe your dream website..."
@@ -152,11 +152,9 @@ export default function Chat({ setPreviewUrl }) {
           whileTap={{ scale: 0.9 }}
           type="submit"
           disabled={loading}
-          className={`px-5 py-2 rounded-full font-semibold shadow transition ${
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-pink-500 hover:bg-pink-600 text-white"
-          }`}
+          className={`w-full sm:w-auto px-5 py-2 rounded-full font-semibold shadow transition ${
+        loading ? "bg-gray-400 cursor-not-allowed" : "bg-pink-500 hover:bg-pink-600 text-white"
+      }`}
         >
           {loading ? "Thinking..." : "Send"}
         </motion.button>
