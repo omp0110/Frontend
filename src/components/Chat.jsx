@@ -49,7 +49,7 @@ export default function Chat({ setPreviewUrl }) {
 
       const folder = data.folderPath;
       if (folder) {
-        console.log("📂 Folder created:", folder);
+        // console.log("📂 Folder created:", folder);
         const files = ["index.html", "style.css", "script.js"];
         const newMessages = [];
 
@@ -58,7 +58,7 @@ export default function Chat({ setPreviewUrl }) {
             const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}${folder}/${file}`);
             const code = await res.text();
 
-            console.log(`📄 Loaded ${file} content:`, code);
+            // console.log(`📄 Loaded ${file} content:`, code);
 
             newMessages.push({
               role: "model",
