@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 
 
-export default function Chat({ setPreviewUrl }) {
+export default function Chat({ setPreviewUrl,setShowMobilePreview }) {
   const [messages, setMessages] = useState([]);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
@@ -139,26 +139,55 @@ export default function Chat({ setPreviewUrl }) {
         <div ref={chatEndRef} />
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-4 flex flex-col sm:flex-row gap-2 items-center">
-        <input
-          type="text"
-          className="w-full px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Describe your dream website..."
-          disabled={loading}
-        />
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          type="submit"
-          disabled={loading}
-          className={`w-full sm:w-auto px-5 py-2 rounded-full font-semibold shadow transition ${
+    <form onSubmit={handleSubmit} className="mt-4 flex flex-col sm:flex-row gap-2 items-center w-full">
+  {/* Input Field */}
+  <input
+    type="text"
+    className="w-full px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
+    value={prompt}
+    onChange={(e) => setPrompt(e.target.value)}
+    placeholder="Describe your dream website..."
+    disabled={loading}
+  />
+
+  {/* Button Row for Mobile */}
+  <div className="flex gap-2 w-full md:hidden">
+    {/* Send Button */}
+    <motion.button
+      whileTap={{ scale: 0.9 }}
+      type="submit"
+      disabled={loading}
+      className={`w-7/8 px-5 py-2 rounded-full font-semibold shadow transition ${
         loading ? "bg-gray-400 cursor-not-allowed" : "bg-pink-500 hover:bg-pink-600 text-white"
       }`}
-        >
-          {loading ? "Thinking..." : "Send"}
-        </motion.button>
-      </form>
+    >
+      {loading ? "Thinking..." : "Send"}
+    </motion.button>
+
+    {/* Show Preview Button (only on mobile) */}
+    <motion.button
+      whileTap={{ scale: 0.95 }}
+      type="button"
+      onClick={() => setShowMobilePreview(true)} // <-- make sure this is passed via props
+      className="w-1/8 px-2 py-2 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow"
+    >
+      👁️
+    </motion.button>
+  </div>
+
+  {/* Desktop Send Button (only on desktop) */}
+  <motion.button
+    whileTap={{ scale: 0.9 }}
+    type="submit"
+    disabled={loading}
+    className={`hidden md:inline-block md:w-auto px-5 py-2 rounded-full font-semibold shadow transition ${
+      loading ? "bg-gray-400 cursor-not-allowed" : "bg-pink-500 hover:bg-pink-600 text-white"
+    }`}
+  >
+    {loading ? "Thinking..." : "Send"}
+  </motion.button>
+</form>
+
     </div>
   );
 }
