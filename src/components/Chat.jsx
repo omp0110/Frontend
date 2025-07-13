@@ -102,7 +102,7 @@ export default function Chat({ setPreviewUrl,setShowMobilePreview }) {
 
   return (
     <div className="flex flex-col h-full p-4 bg-gradient-to-br from-purple-600 via-pink-500 to-red-400">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-white drop-shadow-lg text-center sm:text-left">🧠 Website Maker Bot</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-white drop-shadow-lg text-center sm:text-left">🧠 WebGenie : Your website, one prompt away.</h2>
 
       <div className="flex-1 overflow-y-auto space-y-4 pr-1 sm:pr-2">
         {messages.map((msg, index) => (
