@@ -18,7 +18,7 @@ export default function App() {
 
       {/* Left Chat */}
       <div className="md:w-1/2 w-full h-full backdrop-blur-md bg-white/30 shadow-xl z-0">
-        <Chat setPreviewUrl={setPreviewUrl} setShowMobilePreview={setShowMobilePreview} />
+        <Chat setPreviewUrl={setPreviewUrl} setShowMobilePreview={setShowMobilePreview} previewUrl={previewUrl} />
       </div>
 
       {/* Right-side Desktop Preview */}

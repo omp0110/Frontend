@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 
 
-export default function Chat({ setPreviewUrl,setShowMobilePreview }) {
+export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl}) {
   const [messages, setMessages] = useState([]);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
@@ -186,6 +186,25 @@ export default function Chat({ setPreviewUrl,setShowMobilePreview }) {
   >
     {loading ? "Thinking..." : "Send"}
   </motion.button>
+
+  {import.meta.env.VITE_BACKEND_URL && (
+  <div className="mt-3 text-center">
+    <motion.button
+      whileTap={{ scale: 0.95 }}
+      type="button"
+      onClick={() => window.open(`${previewUrl}`, "_blank")}
+      disabled={!previewUrl}
+      className={`px-4 py-2 rounded-full font-semibold shadow transition ${
+        previewUrl
+          ? "bg-purple-600 hover:bg-purple-700 text-white"
+          : "bg-gray-300 text-gray-500 cursor-not-allowed"
+      }`}
+    >
+      🔗 Open Full Preview
+    </motion.button>
+  </div>
+)}
+
 </form>
 
     </div>
