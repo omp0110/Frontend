@@ -1,0 +1,20 @@
+{
+  "projects": [
+    {
+      "src": "Frontend",
+      "use": "@vercel/node"
+    }
+  ],
+  "builds": [
+    {
+      "src": "Frontend/package.json",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "Frontend/$1"
+    }
+  ]
+}
