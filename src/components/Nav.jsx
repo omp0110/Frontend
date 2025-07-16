@@ -6,7 +6,7 @@ import { UserDataContext } from "../Context/UserContext";
 import axios from "axios";
 
 
-export default function Nav () {
+const Nav = () => {
     const { user, setUser } = useContext(UserDataContext);
    const token = localStorage.getItem("token");
 
@@ -71,3 +71,5 @@ export default function Nav () {
       </header>
     )
 }
+
+export default Nav;
