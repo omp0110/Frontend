@@ -3,15 +3,36 @@ import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 
 
-export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl}) {
+export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl,messageBox, currentGeneratedHTML,
+        setCurrentGeneratedHTML,
+        currentGeneratedCSS,
+        setCurrentGeneratedCSS,
+        currentGeneratedJS,
+        setCurrentGeneratedJS,
+         isLoading,
+        setIsLoading
+      
+      }) {
   const [messages, setMessages] = useState([]);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef(null);
+   const chatAreaRef = useRef(null);
+   
+
+   
+   
+
+
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  useEffect(() => {
+          if (chatAreaRef.current) {
+              chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
+          }
+      }, [messages]);
 
   useEffect(() => {
     scrollToBottom();
@@ -27,6 +48,9 @@ export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl})
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!prompt.trim()) return;
+   
+    setIsLoading(true);
+    
 
     const userMessage = { role: "user", parts: [{ text: prompt }] };
     const updatedMessages = [...messages, userMessage];
@@ -34,6 +58,10 @@ export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl})
     setMessages(updatedMessages);
     setLoading(true);
     setPrompt("");
+
+    setMessages((prev) => [
+      ...prev,{ role: "model", parts: [{ text: "Generating website code..." }] }
+    ])
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/generate`, {
@@ -48,6 +76,12 @@ export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl})
       setPreviewUrl(`${import.meta.env.VITE_BACKEND_URL}${data.previewUrl}`);
 
       const folder = data.folderPath;
+
+      // setCurrentGeneratedHTML(parsedJson.html || currentGeneratedHTML);
+      // setCurrentGeneratedCSS(parsedJson.css || currentGeneratedCSS);
+      // setCurrentGeneratedJS(parsedJson.js || currentGeneratedJS);
+
+
       if (folder) {
         // console.log("📂 Folder created:", folder);
         const files = ["index.html", "style.css", "script.js"];
@@ -57,6 +91,14 @@ export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl})
           try {
             const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}${folder}/${file}`);
             const code = await res.text();
+
+            if(file == "index.html"){
+               setCurrentGeneratedHTML(code || currentGeneratedHTML);
+            }else if(file == "style.css"){
+                setCurrentGeneratedCSS(code || currentGeneratedCSS);
+            }else if(file == "script.js"){
+                setCurrentGeneratedJS(code || currentGeneratedJS);
+            }
 
             // console.log(`📄 Loaded ${file} content:`, code);
 
@@ -80,7 +122,10 @@ export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl})
           }
         }
 
-        setMessages((prev) => [...prev, ...newMessages]);
+        // setMessages((prev) => [...prev, ...newMessages]);
+           setMessages((prev) => [
+      ...prev,{ role: "model", parts: [{ text: "Website generated successfully! Check the preview on the right." }] }
+    ])
       }
 
     //   if (data.messages) {
@@ -96,117 +141,59 @@ export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl})
         },
       ]);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col h-full p-4 bg-gradient-to-br from-purple-600 via-pink-500 to-red-400">
-      <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-white drop-shadow-lg text-center sm:text-left">🧠 WebGenie : Your website, one prompt away.</h2>
+    <div className="w-full md:w-1/2 lg:w-2/5 xl:w-1/3 flex flex-col bg-white shadow-lg rounded-r-lg m-4 p-4 overflow-hidden">
+                    <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center"> <span className="text-3xl font-mono">WebGenie</span> : Your website, one prompt away.</h1>
 
-      <div className="flex-1 overflow-y-auto space-y-4 pr-1 sm:pr-2">
-        {messages.map((msg, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.03 }}
-            className={`p-3 max-w-[80%] rounded-xl shadow ${
-              msg.role === "user" ? "ml-auto bg-blue-500 text-white" : "mr-auto bg-white text-gray-800"
-            }`}
-          >
-            <strong>{msg.role === "user" ? "You" : "AI"}:</strong>{" "}
-            <ReactMarkdown
-  components={{
-    strong: ({ children }) => <strong className="font-bold">{children}</strong>,
-    code: ({ node, inline, className, children, ...props }) =>
-      inline ? (
-        <code className="bg-gray-100 px-1 py-0.5 rounded text-pink-600">{children}</code>
-      ) : (
-        <pre className="bg-gray-900 text-white p-3 rounded-md overflow-x-auto text-sm my-2">
-          <code className="whitespace-pre-wrap">{children}</code>
-        </pre>
-      ),
-    p: ({ children }) => <p className="my-2">{children}</p>,
-  }}
->
-  {msg.parts[0].text}
-</ReactMarkdown>
+                    {/* Chat Display Area */}
+                    <div id="chat-area" ref={chatAreaRef} className="flex-1 overflow-y-auto pr-2 mb-4 chat-area">
+                        {messages.map((msg, index) => (
+                            <div key={index} className={`flex mb-4 ${msg.role === 'user' ? 'justify-end' : 'items-start'}`}>
+                                {msg.role === 'model' && (
+                                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-sm mr-3">AI</div>
+                                )}
+                                <div className={`${msg.role === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'} p-3 rounded-lg max-w-[80%] shadow-md`}>
+                                    <p>{msg.parts[0].text}</p>
+                                </div>
+                                {msg.role === 'user' && (
+                                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm ml-3">You</div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
 
-
-          </motion.div>
-        ))}
-        <div ref={chatEndRef} />
-      </div>
-
-    <form onSubmit={handleSubmit} className="mt-4 flex flex-col sm:flex-row gap-2 items-center w-full">
-  {/* Input Field */}
-  <input
-    type="text"
-    className="w-full px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
-    value={prompt}
-    onChange={(e) => setPrompt(e.target.value)}
-    placeholder="Describe your dream website..."
-    disabled={loading}
-  />
-
-  {/* Button Row for Mobile */}
-  <div className="flex gap-2 w-full md:hidden">
-    {/* Send Button */}
-    <motion.button
-      whileTap={{ scale: 0.9 }}
-      type="submit"
-      disabled={loading}
-      className={`w-7/8 px-5 py-2 rounded-full font-semibold shadow transition ${
-        loading ? "bg-gray-400 cursor-not-allowed" : "bg-pink-500 hover:bg-pink-600 text-white"
-      }`}
-    >
-      {loading ? "Thinking..." : "Send"}
-    </motion.button>
-
-    {/* Show Preview Button (only on mobile) */}
-    <motion.button
-      whileTap={{ scale: 0.95 }}
-      type="button"
-      onClick={() => setShowMobilePreview(true)} // <-- make sure this is passed via props
-      className="w-1/8 px-2 py-2 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow"
-    >
-      👁️
-    </motion.button>
-  </div>
-
-  {/* Desktop Send Button (only on desktop) */}
-  <motion.button
-    whileTap={{ scale: 0.9 }}
-    type="submit"
-    disabled={loading}
-    className={`hidden md:inline-block md:w-auto px-5 py-2 rounded-full font-semibold shadow transition ${
-      loading ? "bg-gray-400 cursor-not-allowed" : "bg-pink-500 hover:bg-pink-600 text-white"
-    }`}
-  >
-    {loading ? "Thinking..." : "Send"}
-  </motion.button>
-
-  {import.meta.env.VITE_BACKEND_URL && (
-  <div className="mt-3 text-center">
-    <motion.button
-      whileTap={{ scale: 0.95 }}
-      type="button"
-      onClick={() => window.open(`${previewUrl}`, "_blank")}
-      disabled={!previewUrl}
-      className={`px-4 py-2 rounded-full font-semibold shadow transition ${
-        previewUrl
-          ? "bg-purple-600 hover:bg-purple-700 text-white"
-          : "bg-gray-300 text-gray-500 cursor-not-allowed"
-      }`}
-    >
-      🔗 Open Full Preview
-    </motion.button>
-  </div>
-)}
-
-</form>
-
-    </div>
+                    {/* Chat Input Area */}
+                    <div className="flex items-center border-t pt-4">
+                        <input
+                            type="text"
+                            id="user-input"
+                            placeholder="Describe your dream website......"
+                            className="flex-1 p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
+                            value={prompt}
+                            onChange={(e) => setPrompt(e.target.value)}
+                            // onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
+                            disabled={isLoading}
+                        />
+                        <button
+                            id="send-btn"
+                            className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-r-lg transition duration-200 ease-in-out shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                            onClick={handleSubmit}
+                            disabled={isLoading}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                    </div>
+                    {messageBox.visible && (
+                        <div className={`mt-2 p-2 rounded-md ${messageBox.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                            {messageBox.text}
+                        </div>
+                    )}
+                </div>
   );
 }
