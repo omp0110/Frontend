@@ -25,8 +25,8 @@ const Preview = ({
     }, 3000); // Hide after 3 seconds
   };
 
- 
 
+  
   const copyCodeToClipboard = () => {
     let textToCopy = "";
     if (activeCodeTab === "html") {
