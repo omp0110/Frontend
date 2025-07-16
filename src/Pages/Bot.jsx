@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Chat from "../Components/Chat";
+
 import Preview from "../Components/Preview";
 import { motion, AnimatePresence } from "framer-motion";
 import Home from "./Home";
 import Nav from "../Components/Nav";
+import Chat from "../Components/Chat";
+
 
 
 export default function Bot() {
@@ -26,6 +28,7 @@ export default function Bot() {
   return (
     <>
     <Nav/>
+    
     <div className="font-sans antialiased bg-gray-100 h-screen flex flex-col pt-15">
 
             <div className="flex flex-1 overflow-hidden">
@@ -46,6 +49,8 @@ export default function Bot() {
 
         
         />
+
+    
       
 
       {/* Right-side Desktop Preview */}

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 
 
-export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl,messageBox, currentGeneratedHTML,
+const Chat = ({ setPreviewUrl,setShowMobilePreview , previewUrl,messageBox, currentGeneratedHTML,
         setCurrentGeneratedHTML,
         currentGeneratedCSS,
         setCurrentGeneratedCSS,
@@ -197,3 +197,5 @@ export default function Chat({ setPreviewUrl,setShowMobilePreview , previewUrl,m
                 </div>
   );
 }
+
+export default Chat;
