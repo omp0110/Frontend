@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-
-import Preview from "../Components/Preview";
 import { motion, AnimatePresence } from "framer-motion";
 import Home from "./Home";
 import Nav from "../Components/Nav";
