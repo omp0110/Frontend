@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Home from "./Home";
-import Nav from "../Components/Nav";
+
 import Chat from "../Components/Chat";
 import Preview from "../Components/Preview";
-
+import Nav from "../Components/Nav";
 
 
 export default function Bot() {
