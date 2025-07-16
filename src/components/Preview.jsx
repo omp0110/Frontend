@@ -12,7 +12,7 @@ const Preview = ({
   setCurrentGeneratedJS,
   isLoading,
   setIsLoading,
-}) {
+}) => {
   const [activeCodeTab, setActiveCodeTab] = useState("html"); // 'html', 'css', 'js'
 
   const websitePreviewRef = useRef(null);
@@ -26,7 +26,7 @@ const Preview = ({
   };
 
 
-  
+
   const copyCodeToClipboard = () => {
     let textToCopy = "";
     if (activeCodeTab === "html") {

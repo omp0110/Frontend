@@ -12,7 +12,7 @@ const Chat = ({ setPreviewUrl,setShowMobilePreview , previewUrl,messageBox, curr
          isLoading,
         setIsLoading
       
-      }) {
+      }) => {
   const [messages, setMessages] = useState([]);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
