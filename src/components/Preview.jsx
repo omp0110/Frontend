@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
-export default function Preview({
+const Preview = ({
   url,
   setMessageBox,
   currentGeneratedHTML,
@@ -255,3 +255,5 @@ useEffect(() => {
     </div>
   );
 }
+
+export default Preview;
