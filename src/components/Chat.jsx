@@ -155,7 +155,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="w-full md:w-1/2 lg:w-2/5 xl:w-1/3 flex flex-col bg-white shadow-lg rounded-r-lg m-4 p-4 overflow-hidden">
+    <div className="w-full md:w-1/2 lg:w-2/5 xl:w-1/3 flex flex-col bg-white shadow-lg rounded-r-lg m-4 p-3 overflow-hidden">
                     <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center"> <span className="text-3xl font-mono">WebGenie</span> : Your website, one prompt away.</h1>
 
                     {/* Chat Display Area */}
@@ -176,12 +176,12 @@ useEffect(() => {
                     </div>
 
                     {/* Chat Input Area */}
-                    <div className="flex items-center border-t pt-4 ">
+                    <div className="flex items-center border-t pt-4">
                         <input
                             type="text"
                             id="user-input"
                             placeholder="Describe your dream website......"
-                            className="flex-1 p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
+                            className="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
                             // onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
@@ -190,7 +190,7 @@ useEffect(() => {
                         <div className="flex items-center space-x-2">
                           <button
                             id="send-btn"
-                            className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-r-lg transition duration-200 ease-in-out shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-r-lg transition duration-200 ease-in-out shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                             onClick={handleSubmit}
                             disabled={isLoading}
                         >
@@ -200,12 +200,12 @@ useEffect(() => {
                         </button>
                         { <button
   id="preview-btn"
-  className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition duration-200 ease-in-out shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+  className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition duration-200 ease-in-out shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
   onClick={() => setShowMobilePreview(true)}
   disabled={!previewUrl || !isMobile}
 >
   
-  <span className="text-sm font-medium">Show Preview</span>
+  <span className="text-sm font-medium">Show preview</span>
 </button>}
                         </div>
 
