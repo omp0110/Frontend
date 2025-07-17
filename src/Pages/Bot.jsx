@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Home from "./Home";
 
-import Chat from "../Components/Chat";
-import Preview from "../Components/Preview";
-import Nav from "../Components/Nav";
+import Chat from "../components/Chat";
+import Preview from "../components/Preview";
+import Nav from "../components/Nav";
 
 
 export default function Bot() {

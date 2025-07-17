@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import AuthLayout from '../Components/AuthLayout';
+import AuthLayout from '../components/AuthLayout';
 import { UserDataContext } from '../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Nav from '../Components/Nav';
+import Nav from '../components/Nav';
 
 const Register = () => {
   const [email, setEmail] = useState('');
