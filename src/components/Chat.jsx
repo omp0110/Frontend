@@ -155,7 +155,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="w-full md:w-1/2 lg:w-2/5 xl:w-1/3 flex flex-col bg-white shadow-lg rounded-r-lg m-4 p-3 overflow-hidden">
+    <div className={`w-full md:w-1/2 lg:w-2/5 xl:w-1/3 flex flex-col bg-white shadow-lg rounded-r-lg sm:m-1 md:m-4 lg:m-4  p-3 overflow-hidden `}>
                     <h1 className="text-2xl font-semibold text-gray-800 mb-6 text-center"> <span className="text-3xl font-mono">WebGenie</span> : Your website, one prompt away.</h1>
 
                     {/* Chat Display Area */}
