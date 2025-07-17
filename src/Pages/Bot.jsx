@@ -5,6 +5,7 @@ import Home from "./Home";
 import Chat from "../components/Chat";
 import Preview from "../components/Preview";
 import Nav from "../components/Nav";
+import MobilePreview from "../components/MobilePreview";
 
 
 export default function Bot() {
@@ -90,7 +91,7 @@ export default function Bot() {
                 </div>
 
                 {/* Preview Content */}
-                <Preview
+                <MobilePreview
                   url={previewUrl}
                   setMessageBox={setMessageBox}
                   currentGeneratedHTML={currentGeneratedHTML}
