@@ -10,14 +10,23 @@ const Chat = ({ setPreviewUrl,setShowMobilePreview , previewUrl,messageBox, curr
         currentGeneratedJS,
         setCurrentGeneratedJS,
          isLoading,
-        setIsLoading
-      
+        setIsLoading,
+        showMobilePreview,
+        
       }) => {
   const [messages, setMessages] = useState([]);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef(null);
    const chatAreaRef = useRef(null);
+
+   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+useEffect(() => {
+  const handleResize = () => setIsMobile(window.innerWidth < 768);
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
    
 
    
@@ -167,7 +176,7 @@ const Chat = ({ setPreviewUrl,setShowMobilePreview , previewUrl,messageBox, curr
                     </div>
 
                     {/* Chat Input Area */}
-                    <div className="flex items-center border-t pt-4">
+                    <div className="flex items-center border-t pt-4 ">
                         <input
                             type="text"
                             id="user-input"
@@ -178,7 +187,8 @@ const Chat = ({ setPreviewUrl,setShowMobilePreview , previewUrl,messageBox, curr
                             // onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
                             disabled={isLoading}
                         />
-                        <button
+                        <div className="flex items-center space-x-2">
+                          <button
                             id="send-btn"
                             className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-r-lg transition duration-200 ease-in-out shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                             onClick={handleSubmit}
@@ -188,6 +198,17 @@ const Chat = ({ setPreviewUrl,setShowMobilePreview , previewUrl,messageBox, curr
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
                         </button>
+                        { <button
+  id="preview-btn"
+  className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition duration-200 ease-in-out shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+  onClick={() => setShowMobilePreview(true)}
+  disabled={!previewUrl || !isMobile}
+>
+  
+  <span className="text-sm font-medium">Show Preview</span>
+</button>}
+                        </div>
+
                     </div>
                     {messageBox.visible && (
                         <div className={`mt-2 p-2 rounded-md ${messageBox.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>

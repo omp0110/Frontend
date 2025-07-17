@@ -144,7 +144,7 @@ useEffect(() => {
   
 
   return (
-    <div className="flex-1 flex flex-col bg-white shadow-lg rounded-l-lg m-4 p-4 overflow-hidden">
+    <>
       <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
         Website Preview & Code
       </h2>
@@ -252,7 +252,7 @@ useEffect(() => {
 </div>
 
 
-    </div>
+    </>
   );
 }
 

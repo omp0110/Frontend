@@ -45,8 +45,7 @@ export default function Bot() {
           setCurrentGeneratedJS={setCurrentGeneratedJS}
           isLoading={isLoading} // Pass isLoading state
           setIsLoading={setIsLoading} // Pass setIsLoading function
-
-        
+          showMobilePreview={showMobilePreview} // Pass showMobilePreview state
         />
 
     
@@ -54,7 +53,9 @@ export default function Bot() {
 
       {/* Right-side Desktop Preview */}
      
-        <Preview   url={previewUrl}
+        
+         <div className={`flex-1 flex flex-col bg-white shadow-lg rounded-l-lg m-4 p-4 overflow-hidden hidden md:flex`}>
+           <Preview   url={previewUrl}
           setMessageBox={setMessageBox}
           currentGeneratedHTML={currentGeneratedHTML}
           setCurrentGeneratedHTML={setCurrentGeneratedHTML}
@@ -67,7 +68,46 @@ export default function Bot() {
 
 
         />
-     
+         </div>
+
+         <AnimatePresence>
+            {showMobilePreview && (
+              <motion.div
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "100%" }}
+                transition={{ type: "spring", stiffness: 120 }}
+                className="fixed inset-0 bg-white z-50 p-4 overflow-y-auto md:hidden"
+              >
+                {/* Close Button */}
+                <div className="flex justify-end">
+                  <button
+                    className="text-red-600 text-2xl font-bold"
+                    onClick={() => setShowMobilePreview(false)}
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {/* Preview Content */}
+                <Preview
+                  url={previewUrl}
+                  setMessageBox={setMessageBox}
+                  currentGeneratedHTML={currentGeneratedHTML}
+                  setCurrentGeneratedHTML={setCurrentGeneratedHTML}
+                  currentGeneratedCSS={currentGeneratedCSS}
+                  setCurrentGeneratedCSS={setCurrentGeneratedCSS}
+                  currentGeneratedJS={currentGeneratedJS}
+                  setCurrentGeneratedJS={setCurrentGeneratedJS}
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+         
+        
 
     
     </div>
