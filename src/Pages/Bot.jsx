@@ -13,9 +13,9 @@ export default function Bot() {
   const [showMobilePreview, setShowMobilePreview] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-   const [currentGeneratedHTML, setCurrentGeneratedHTML] = useState(`/* No custom HTML yet */`);
-         const [currentGeneratedCSS, setCurrentGeneratedCSS] = useState(`/* No custom CSS yet */`);
-         const [currentGeneratedJS, setCurrentGeneratedJS] = useState(`/* No custom JavaScript yet */`);
+   const [currentGeneratedHTML, setCurrentGeneratedHTML] = useState(null);
+         const [currentGeneratedCSS, setCurrentGeneratedCSS] = useState(null);
+         const [currentGeneratedJS, setCurrentGeneratedJS] = useState(null);
 
    const [messageBox, setMessageBox] = useState({ visible: false, text: '', type: '' });
 
